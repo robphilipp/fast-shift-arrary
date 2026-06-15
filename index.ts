@@ -1,0 +1,1 @@
+export {FastShiftArray} from './FastShiftArray'

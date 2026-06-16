@@ -8,13 +8,14 @@ permissions:
   id-token: write
 jobs:
   build-and-deploy:
+    environment: github-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '24', cache: 'npm' }
       - run: npm ci
-      - run: npx typedoc ./index.ts
+      - run: 'npx typedoc ./index.ts'
       - uses: actions/upload-pages-artifact@v3
         with: { path: docs/ } # Matches "out" in typedoc.json
       - id: deployment

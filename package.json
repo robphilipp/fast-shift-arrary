@@ -12,7 +12,8 @@
   "scripts": {
     "prepare": "npm run build",
     "build": "tsc",
-    "test": "jest *.test.ts"
+    "test": "jest *.test.ts",
+    "gen-docs": "npx typedoc src/app/charts/ --out docs/ --entryPoints index.ts --entryPointStrategy expand"
   },
   "files": [
     "dist",

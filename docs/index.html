@@ -1,0 +1,425 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>fast-shift-array</title><meta name="description" content="Documentation for fast-shift-array"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">fast-shift-array</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>fast-shift-array</h1></div><div class="tsd-panel tsd-typography"><h1 id="fastshiftarray" class="tsd-anchor-link">FastShiftArray<a href="#fastshiftarray" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<p>This implementation is designed to be a lightweight alternative to the standard JavaScript <code>Array</code> class, with a focus on performance and ease of use. It is particularly useful in scenarios where frequent shift operations are required, such as in data processing, event handling, and other applications where performance is critical. This drop-in replacement for the JavaScript <code>Array</code> class provides fast (approximate <code>O(1)</code>) <code>shift()</code> operations, and in some cases similar <code>O(1)</code> <code>unshift()</code> operations.</p>
+<h2 id="use" class="tsd-anchor-link">use<a href="#use" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">fast-shift-array</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="performance-comparison" class="tsd-anchor-link">performance comparison<a href="#performance-comparison" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Comparision of the <code>FastShiftArray.shift()</code> and <code>Array.shift()</code> function. Each table represents a comparisons of various
+array sizes, for which half the array elements where shifted out of the array, through repeated calls to the <code>shift()</code>
+function. Each row of each table represents 10 runs for the specified array size and number of shifts. The values are
+the average number of milliseconds it took to complete all the shifts, followed by ± one standard-deviation.</p>
+<p>The first table uses a <code>compacting size</code> of 10<sup>5</sup>. This means that after 10<sup>5</sup> shifts, the first
+10<sup>5</sup> elements are dropped using an <code>Array.splice()</code> function. The next table uses a <code>compacting size</code> of
+10<sup>4</sup>, and then the next table uses a <code>compacting size</code> of 1,000, and then 100.</p>
+<h3 id="fastshiftarray-compacts-when-head-100000" class="tsd-anchor-link">FastShiftArray compacts when head = 100,000<a href="#fastshiftarray-compacts-when-head-100000" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Array Size</th>
+<th style="text-align:right">Num Shifts</th>
+<th style="text-align:right">FastShiftArray (ms)</th>
+<th style="text-align:right">Array (ms)</th>
+<th style="text-align:right">Speed-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">10,000</td>
+<td style="text-align:right">5,000</td>
+<td style="text-align:right">0.19 ± 0.11</td>
+<td style="text-align:right">0.33 ± 0.21</td>
+<td style="text-align:right">1.76 ± 0.16</td>
+</tr>
+<tr>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">25,000</td>
+<td style="text-align:right">0.76 ± 0.10</td>
+<td style="text-align:right">146.66 ± 2.32</td>
+<td style="text-align:right">196.21 ± 18.51</td>
+</tr>
+<tr>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">1.45 ± 0.02</td>
+<td style="text-align:right">581.62 ± 9.62</td>
+<td style="text-align:right">400.07 ± 4.05</td>
+</tr>
+<tr>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">2.93 ± 0.04</td>
+<td style="text-align:right">2,309.18 ± 19.80</td>
+<td style="text-align:right">787.30 ± 14.19</td>
+</tr>
+<tr>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">150,000</td>
+<td style="text-align:right">4.88 ± 0.21</td>
+<td style="text-align:right">5,202.80 ± 54.74</td>
+<td style="text-align:right">1,067.76 ± 39.13</td>
+</tr>
+<tr>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">7.19 ± 1.42</td>
+<td style="text-align:right">12,521.91 ± 5,009.20</td>
+<td style="text-align:right">1,682.12 ± 326.29</td>
+</tr>
+<tr>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">250,000</td>
+<td style="text-align:right">9.83 ± 1.35</td>
+<td style="text-align:right">25,242.45 ± 8,692.55</td>
+<td style="text-align:right">2,491.91 ± 583.89</td>
+</tr>
+<tr>
+<td style="text-align:right">600,000</td>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">10.54 ± 0.84</td>
+<td style="text-align:right">23,641.16 ± 8,428.45</td>
+<td style="text-align:right">2,205.86 ± 531.73</td>
+</tr>
+<tr>
+<td style="text-align:right">700,000</td>
+<td style="text-align:right">350,000</td>
+<td style="text-align:right">12.77 ± 1.29</td>
+<td style="text-align:right">28,522.37 ± 648.12</td>
+<td style="text-align:right">2,252.48 ± 181.72</td>
+</tr>
+<tr>
+<td style="text-align:right">800,000</td>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">14.89 ± 1.29</td>
+<td style="text-align:right">37,223.47 ± 782.26</td>
+<td style="text-align:right">2,519.99 ± 236.51</td>
+</tr>
+<tr>
+<td style="text-align:right">900,000</td>
+<td style="text-align:right">450,000</td>
+<td style="text-align:right">16.81 ± 1.57</td>
+<td style="text-align:right">60,779.80 ± 27,139.28</td>
+<td style="text-align:right">3,558.00 ± 1,315.03</td>
+</tr>
+<tr>
+<td style="text-align:right">1,000,000</td>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">19.32 ± 1.15</td>
+<td style="text-align:right">81,686.76 ± 34,683.43</td>
+<td style="text-align:right">4,194.94 ± 1,660.87</td>
+</tr>
+</tbody>
+</table>
+<figure>
+    <img src="../public/media/fast-shift-array-perf-100k-linear.png" alt="linear-y-axis-100k-compacting">
+    <figcaption>
+        <b>Figure 1</b>. <code>FastShiftArray.shift()</code> performance versus JavaScript <code>Array.shift()</code> performance. Each data point is calculated for an array size and then calling the shift() function half as many times as the array size. For example, when the array size is 100,000, then the <code>shift()</code> function is called 50,000 times. Each data point shows the mean-value for 10 runs, and the error bars represent plus/minus one standard deviation. In this run, the compacting-size is 100k, which means that after 100k calls to the <code>FastShiftArray.shift()</code>, the shifted memory is reclaimed using the <code>splice()</code> function.
+    </figcaption>
+</figure>
+<figure>
+    <img src="../public/media/fast-shift-array-perf-100k-log.png" alt="log-y-axis-100k-compacting">
+    <figcaption>
+        <b>Figure 2</b>. <code>FastShiftArray.shift()</code> performance versus JavaScript <code>Array.shift()</code> performance. This figure is the same as <b>Figure 1</b>, except that the y-axis is shown as a logarithmic scale. Each data point is calculated for an array size and then calling the <code>shift()</code> function half as many times as the array size. For example, when the array size is 100,000, then the shift() function is called 50,000 times. Each data point shows the mean-value for 10 runs, and the error bars represent plus/minus one standard deviation. In this run, the compacting-size is 100k, which means that after 100k calls to the <code>FastShiftArray.shift()</code>, the shifted memory is reclaimed using the <code>splice()</code> function.
+    </figcaption>
+</figure>
+<figure>
+    <img src="../public/media/fast-shift-array-speed-up-100k-linear.png" alt="FastShiftArray-is-x-times-faster-than-arry-100k-compacting">
+    <figcaption>
+        <b>Figure 3</b>. Shows the number of times that the <code>FastShiftArray.shift()</code> is faster than the JavaScript <code>Array.shift()</code>. Each data point is calculated for an array size and then calling the shift() function half as many times as the array size. For example, when the array size is 100,000, then the <code>shift()</code> function is called 50,000 times. Each data point shows the mean-value for 10 runs, and the error bars represent plus/minus one standard deviation. In this run, the compacting-size is 100k, which means that after 100k calls to the <code>FastShiftArray.shift()</code>, the shifted memory is reclaimed using the <code>splice()</code> function.
+    </figcaption>
+</figure>
+<h3 id="fastshiftarray-compacts-when-head-10000" class="tsd-anchor-link">FastShiftArray compacts when head = 10,000<a href="#fastshiftarray-compacts-when-head-10000" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Array Size</th>
+<th style="text-align:right">Num Shifts</th>
+<th style="text-align:right">FastShiftArray (ms)</th>
+<th style="text-align:right">Array (ms)</th>
+<th style="text-align:right">Speed-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">10,000</td>
+<td style="text-align:right">5,000</td>
+<td style="text-align:right">0.15 ± 0.00</td>
+<td style="text-align:right">0.22 ± 0.01</td>
+<td style="text-align:right">1.52 ± 0.09</td>
+</tr>
+<tr>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">25,000</td>
+<td style="text-align:right">0.74 ± 0.01</td>
+<td style="text-align:right">145.53 ± 1.24</td>
+<td style="text-align:right">195.51 ± 2.03</td>
+</tr>
+<tr>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">1.50 ± 0.05</td>
+<td style="text-align:right">577.66 ± 6.52</td>
+<td style="text-align:right">384.46 ± 11.09</td>
+</tr>
+<tr>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">5.08 ± 0.45</td>
+<td style="text-align:right">4,488.27 ± 692.40</td>
+<td style="text-align:right">876.60 ± 84.75</td>
+</tr>
+<tr>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">150,000</td>
+<td style="text-align:right">4.56 ± 0.11</td>
+<td style="text-align:right">5,175.45 ± 54.34</td>
+<td style="text-align:right">1,136.44 ± 24.96</td>
+</tr>
+<tr>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">6.12 ± 0.15</td>
+<td style="text-align:right">9,189.89 ± 75.51</td>
+<td style="text-align:right">1,502.04 ± 34.50</td>
+</tr>
+<tr>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">250,000</td>
+<td style="text-align:right">10.39 ± 0.16</td>
+<td style="text-align:right">32,347.06 ± 265.23</td>
+<td style="text-align:right">3,114.48 ± 41.13</td>
+</tr>
+<tr>
+<td style="text-align:right">600,000</td>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">9.43 ± 0.16</td>
+<td style="text-align:right">20,807.97 ± 215.47</td>
+<td style="text-align:right">2,206.01 ± 37.60</td>
+</tr>
+<tr>
+<td style="text-align:right">700,000</td>
+<td style="text-align:right">350,000</td>
+<td style="text-align:right">13.90 ± 0.17</td>
+<td style="text-align:right">65,655.05 ± 456.49</td>
+<td style="text-align:right">4,725.68 ± 76.48</td>
+</tr>
+<tr>
+<td style="text-align:right">800,000</td>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">12.20 ± 0.25</td>
+<td style="text-align:right">36,956.30 ± 331.51</td>
+<td style="text-align:right">3,029.61 ± 63.40</td>
+</tr>
+<tr>
+<td style="text-align:right">900,000</td>
+<td style="text-align:right">450,000</td>
+<td style="text-align:right">17.74 ± 0.31</td>
+<td style="text-align:right">109,389.23 ± 926.44</td>
+<td style="text-align:right">6,167.35 ± 76.99</td>
+</tr>
+<tr>
+<td style="text-align:right">1,000,000</td>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">15.58 ± 0.28</td>
+<td style="text-align:right">58,016.47 ± 658.31</td>
+<td style="text-align:right">3,724.07 ± 63.58</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fastshiftarray-compacts-when-head-1000" class="tsd-anchor-link">FastShiftArray compacts when head = 1000<a href="#fastshiftarray-compacts-when-head-1000" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Array Size</th>
+<th style="text-align:right">Num Shifts</th>
+<th style="text-align:right">FastShiftArray (ms)</th>
+<th style="text-align:right">Array (ms)</th>
+<th style="text-align:right">Speed-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">10,000</td>
+<td style="text-align:right">5,000</td>
+<td style="text-align:right">0.15 ± 0.00</td>
+<td style="text-align:right">0.22 ± 0.00</td>
+<td style="text-align:right">1.48 ± 0.03</td>
+</tr>
+<tr>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">25,000</td>
+<td style="text-align:right">0.74 ± 0.01</td>
+<td style="text-align:right">145.44 ± 0.62</td>
+<td style="text-align:right">196.03 ± 2.84</td>
+</tr>
+<tr>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">1.49 ± 0.04</td>
+<td style="text-align:right">576.35 ± 1.53</td>
+<td style="text-align:right">386.99 ± 10.14</td>
+</tr>
+<tr>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">5.38 ± 0.27</td>
+<td style="text-align:right">4,744.86 ± 74.10</td>
+<td style="text-align:right">883.71 ± 35.92</td>
+</tr>
+<tr>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">150,000</td>
+<td style="text-align:right">4.54 ± 0.07</td>
+<td style="text-align:right">5,207.01 ± 122.83</td>
+<td style="text-align:right">1,148.37 ± 28.69</td>
+</tr>
+<tr>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">6.35 ± 0.11</td>
+<td style="text-align:right">9,194.31 ± 63.61</td>
+<td style="text-align:right">1,449.43 ± 24.40</td>
+</tr>
+<tr>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">250,000</td>
+<td style="text-align:right">10.38 ± 0.13</td>
+<td style="text-align:right">32,247.87 ± 175.34</td>
+<td style="text-align:right">3,108.41 ± 33.56</td>
+</tr>
+<tr>
+<td style="text-align:right">600,000</td>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">9.14 ± 0.04</td>
+<td style="text-align:right">20,673.69 ± 101.21</td>
+<td style="text-align:right">2,261.81 ± 14.28</td>
+</tr>
+<tr>
+<td style="text-align:right">700,000</td>
+<td style="text-align:right">350,000</td>
+<td style="text-align:right">14.02 ± 0.17</td>
+<td style="text-align:right">65,495.56 ± 213.67</td>
+<td style="text-align:right">4,672.08 ± 59.80</td>
+</tr>
+<tr>
+<td style="text-align:right">800,000</td>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">12.52 ± 0.07</td>
+<td style="text-align:right">36,892.13 ± 274.72</td>
+<td style="text-align:right">2,947.53 ± 25.56</td>
+</tr>
+<tr>
+<td style="text-align:right">900,000</td>
+<td style="text-align:right">450,000</td>
+<td style="text-align:right">17.68 ± 0.38</td>
+<td style="text-align:right">108,960.67 ± 286.28</td>
+<td style="text-align:right">6,164.14 ± 127.86</td>
+</tr>
+<tr>
+<td style="text-align:right">1,000,000</td>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">15.26 ± 0.11</td>
+<td style="text-align:right">58,560.16 ± 901.81</td>
+<td style="text-align:right">3,838.26 ± 65.69</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fastshiftarray-compacts-when-head-100" class="tsd-anchor-link">FastShiftArray compacts when head = 100<a href="#fastshiftarray-compacts-when-head-100" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Array Size</th>
+<th style="text-align:right">Num Shifts</th>
+<th style="text-align:right">FastShiftArray (ms)</th>
+<th style="text-align:right">Array (ms)</th>
+<th style="text-align:right">Speed-up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">10,000</td>
+<td style="text-align:right">5,000</td>
+<td style="text-align:right">0.15 ± 0.00</td>
+<td style="text-align:right">0.22 ± 0.00</td>
+<td style="text-align:right">1.44 ± 0.04</td>
+</tr>
+<tr>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">25,000</td>
+<td style="text-align:right">0.75 ± 0.01</td>
+<td style="text-align:right">145.33 ± 0.39</td>
+<td style="text-align:right">194.69 ± 2.58</td>
+</tr>
+<tr>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">50,000</td>
+<td style="text-align:right">1.50 ± 0.02</td>
+<td style="text-align:right">576.41 ± 3.01</td>
+<td style="text-align:right">385.17 ± 3.24</td>
+</tr>
+<tr>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">100,000</td>
+<td style="text-align:right">5.25 ± 0.09</td>
+<td style="text-align:right">4,728.47 ± 20.44</td>
+<td style="text-align:right">900.49 ± 17.42</td>
+</tr>
+<tr>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">150,000</td>
+<td style="text-align:right">4.67 ± 0.11</td>
+<td style="text-align:right">5,191.95 ± 54.82</td>
+<td style="text-align:right">1,111.66 ± 27.32</td>
+</tr>
+<tr>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">200,000</td>
+<td style="text-align:right">6.37 ± 0.08</td>
+<td style="text-align:right">9,235.89 ± 177.75</td>
+<td style="text-align:right">1,450.07 ± 19.89</td>
+</tr>
+<tr>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">250,000</td>
+<td style="text-align:right">10.80 ± 0.65</td>
+<td style="text-align:right">32,178.85 ± 53.26</td>
+<td style="text-align:right">2,989.18 ± 160.44</td>
+</tr>
+<tr>
+<td style="text-align:right">600,000</td>
+<td style="text-align:right">300,000</td>
+<td style="text-align:right">9.29 ± 0.20</td>
+<td style="text-align:right">20,645.45 ± 85.35</td>
+<td style="text-align:right">2,224.45 ± 50.57</td>
+</tr>
+<tr>
+<td style="text-align:right">700,000</td>
+<td style="text-align:right">350,000</td>
+<td style="text-align:right">14.33 ± 0.37</td>
+<td style="text-align:right">65,346.82 ± 109.40</td>
+<td style="text-align:right">4,562.19 ± 113.05</td>
+</tr>
+<tr>
+<td style="text-align:right">800,000</td>
+<td style="text-align:right">400,000</td>
+<td style="text-align:right">12.90 ± 0.69</td>
+<td style="text-align:right">36,871.75 ± 367.28</td>
+<td style="text-align:right">2,865.20 ± 130.48</td>
+</tr>
+<tr>
+<td style="text-align:right">900,000</td>
+<td style="text-align:right">450,000</td>
+<td style="text-align:right">17.78 ± 0.16</td>
+<td style="text-align:right">108,940.82 ± 415.86</td>
+<td style="text-align:right">6,128.48 ± 61.86</td>
+</tr>
+<tr>
+<td style="text-align:right">1,000,000</td>
+<td style="text-align:right">500,000</td>
+<td style="text-align:right">15.82 ± 0.35</td>
+<td style="text-align:right">58,032.08 ± 261.73</td>
+<td style="text-align:right">3,670.83 ± 78.81</td>
+</tr>
+</tbody>
+</table>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#fastshiftarray"><span>Fast<wbr/>Shift<wbr/>Array</span></a><ul><li><a href="#use"><span>use</span></a></li><li><a href="#performance-comparison"><span>performance comparison</span></a></li><li><ul><li><a href="#fastshiftarray-compacts-when-head-100000"><span>Fast<wbr/>Shift<wbr/>Array compacts when head = 100,000</span></a></li><li><a href="#fastshiftarray-compacts-when-head-10000"><span>Fast<wbr/>Shift<wbr/>Array compacts when head = 10,000</span></a></li><li><a href="#fastshiftarray-compacts-when-head-1000"><span>Fast<wbr/>Shift<wbr/>Array compacts when head = 1000</span></a></li><li><a href="#fastshiftarray-compacts-when-head-100"><span>Fast<wbr/>Shift<wbr/>Array compacts when head = 100</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">fast-shift-array</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

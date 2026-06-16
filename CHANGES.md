@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 (2023-04-04)
+
+Fixed links to docs (deja-vu).
+
 ## 0.1.3 (2023-04-04)
 
 Fixed links to docs.

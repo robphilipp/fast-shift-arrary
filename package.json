@@ -3,6 +3,7 @@
   "version": "0.1.2-snapshot",
   "description": "Fast shift array",
   "author": "Rob Philipp <rob.philipp@gmail.com> (https://github.com/robphilipp)",
+  "homepage": "https://robphilipp.github.io/fast-shift-arrary/docs/index.html",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/robphilipp/fast-shift-arrary.git"

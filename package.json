@@ -1,11 +1,11 @@
 {
   "name": "fast-shift-array",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fast shift array",
   "author": "Rob Philipp <rob.philipp@gmail.com> (https://github.com/robphilipp)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robphilipp/result.git"
+    "url": "git+https://github.com/robphilipp/fast-shift-arrary.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

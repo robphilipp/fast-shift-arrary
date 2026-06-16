@@ -8,6 +8,8 @@ This implementation is designed to be a lightweight alternative to the standard 
 npm install fast-shift-array
 ```
 
+[Documentation](https://robphilipp.github.io/fast-shift-arrary/docs/index.html)
+
 ## performance comparison
 
 Comparision of the `FastShiftArray.shift()` and `Array.shift()` function. Each table represents a comparisons of various

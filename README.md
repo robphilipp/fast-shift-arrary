@@ -37,19 +37,19 @@ The first table uses a `compacting size` of 10<sup>5</sup>. This means that afte
 |  1,000,000 |    500,000 |        19.32 ± 1.15 | 81,686.76 ± 34,683.43 | 4,194.94 ± 1,660.87 |
 
 <figure>
-    <img src="./public/media/fast-shift-array-perf-100k-linear.png" alt="linear-y-axis-100k-compacting" style="max-width: 650px;">
+    <img src="./public/media/fast-shift-array-perf-100k-linear.png" alt="linear-y-axis-100k-compacting" style="max-width: 550px;">
     <figcaption>
         <b>Figure 1</b>. <code>FastShiftArray.shift()</code> performance versus JavaScript <code>Array.shift()</code> performance. Each data point is calculated for an array size and then calling the shift() function half as many times as the array size. For example, when the array size is 100,000, then the <code>shift()</code> function is called 50,000 times. Each data point shows the mean-value for 10 runs, and the error bars represent plus/minus one standard deviation. In this run, the compacting-size is 100k, which means that after 100k calls to the <code>FastShiftArray.shift()</code>, the shifted memory is reclaimed using the <code>splice()</code> function.
     </figcaption>
 </figure>
 <figure>
-    <img src="./public/media/fast-shift-array-perf-100k-log.png" alt="log-y-axis-100k-compacting" style="max-width: 650px;">
+    <img src="./public/media/fast-shift-array-perf-100k-log.png" alt="log-y-axis-100k-compacting" style="max-width: 550px;">
     <figcaption>
         <b>Figure 2</b>. <code>FastShiftArray.shift()</code> performance versus JavaScript <code>Array.shift()</code> performance. This figure is the same as <b>Figure 1</b>, except that the y-axis is shown as a logarithmic scale. Each data point is calculated for an array size and then calling the <code>shift()</code> function half as many times as the array size. For example, when the array size is 100,000, then the shift() function is called 50,000 times. Each data point shows the mean-value for 10 runs, and the error bars represent plus/minus one standard deviation. In this run, the compacting-size is 100k, which means that after 100k calls to the <code>FastShiftArray.shift()</code>, the shifted memory is reclaimed using the <code>splice()</code> function.
     </figcaption>
 </figure>
 <figure>
-    <img src="./public/media/fast-shift-array-speed-up-100k-linear.png" alt="FastShiftArray-is-x-times-faster-than-arry-100k-compacting" style="max-width: 650px;">
+    <img src="./public/media/fast-shift-array-speed-up-100k-linear.png" alt="FastShiftArray-is-x-times-faster-than-arry-100k-compacting" style="max-width: 550px;">
     <figcaption>
         <b>Figure 3</b>. Shows the number of times that the <code>FastShiftArray.shift()</code> is faster than the JavaScript <code>Array.shift()</code>. Each data point is calculated for an array size and then calling the shift() function half as many times as the array size. For example, when the array size is 100,000, then the <code>shift()</code> function is called 50,000 times. Each data point shows the mean-value for 10 runs, and the error bars represent plus/minus one standard deviation. In this run, the compacting-size is 100k, which means that after 100k calls to the <code>FastShiftArray.shift()</code>, the shifted memory is reclaimed using the <code>splice()</code> function.
     </figcaption>

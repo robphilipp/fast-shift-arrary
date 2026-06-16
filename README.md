@@ -8,7 +8,7 @@ This implementation is designed to be a lightweight alternative to the standard 
 npm install fast-shift-array
 ```
 
-[Documentation](https://robphilipp.github.io/fast-shift-arrary/docs/index.html)
+[Documentation](https://robphilipp.github.io/fast-shift-arrary/index.html)
 
 ## performance comparison
 

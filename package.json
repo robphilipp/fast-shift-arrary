@@ -5,7 +5,7 @@
   "author": "Rob Philipp <rob.philipp@gmail.com> (https://github.com/robphilipp)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robphilipp/result.git"
+    "url": "git+https://github.com/robphilipp/fast-shift-arrary.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

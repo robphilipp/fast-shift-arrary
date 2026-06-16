@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3 (2023-04-04)
+
+Fixed links to docs.
+
 ## 0.1.2 (2023-04-04)
 
 1. Added code docs

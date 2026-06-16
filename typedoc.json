@@ -1,0 +1,9 @@
+{
+  "name": "FastShiftArray Docs",
+  "entryPoints": ["./index.ts"],
+  "exclude": ["**/*.test.ts", "node_modules/**", "./dist/**"],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "githubPages": true,
+  "readme": "./README.md"
+}
